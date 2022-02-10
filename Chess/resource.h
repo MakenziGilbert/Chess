@@ -20,8 +20,13 @@
 #define IDD_WINWHILE1                   142
 #define IDD_WINBLACK                    142
 #define IDD_WHITE                       142
+#define IDD_DIALOG1                     143
+#define IDD_CREATE_SESSION              143
+#define IDD_CREATE_SESSION1             144
+#define IDD_CONNECTION_SESSION          144
 #define IDNEW                           1000
 #define IDEXIT                          1001
+#define IDC_EDIT1                       1002
 #define ID_32771                        32771
 #define IDM_                            32772
 #define IDM_NEWGAME                     32773
@@ -39,6 +44,12 @@
 #define IDM_SAVE1                       32785
 #define IDM_SAVE2                       32786
 #define IDM_SAVE3                       32787
+#define ID_32788                        32788
+#define ID_32789                        32789
+#define ID_32790                        32790
+#define CREATE_SESSION                  32791
+#define IDM_CREATE_SESSION              32792
+#define IDM_CONNECTION_SESSION          32793
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -46,9 +57,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        142
-#define _APS_NEXT_COMMAND_VALUE         32788
-#define _APS_NEXT_CONTROL_VALUE         1002
+#define _APS_NEXT_RESOURCE_VALUE        144
+#define _APS_NEXT_COMMAND_VALUE         32794
+#define _APS_NEXT_CONTROL_VALUE         1003
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

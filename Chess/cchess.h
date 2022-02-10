@@ -355,6 +355,10 @@ class ChessBoard
 {
 private:	
 public:
+	string board[8][8];//масив хранит местоположение всех фигур
+	int win = 0;
+	bool step;
+
 	Pawn white_pawn[8];
 	Pawn black_pawn[8];
 	Tour white_tour[2];
@@ -367,10 +371,6 @@ public:
 	vector<Queen> black_queen;
 	King white_king;
 	King black_king;
-
-	string board[8][8];//масив хранит местоположение всех фигур
-	int win = 0;
-	bool step;
 
 	ChessBoard();
 	bool Move(Position figura, Position move);
@@ -704,12 +704,14 @@ bool ChessBoard::Move(Position figura, Position move)
 				{
 					board[posF.y][posF.x] = "..";
 					board[posM.y][posM.x] = "wK";
+					step = !step;
 				}
 				else if (board[posM.y][posM.x][0] != 'w' && board[posM.y][posM.x][0] == 'b')
 				{
 					noAlive(posM);
 					board[posF.y][posF.x] = "..";
 					board[posM.y][posM.x] = "wK";
+					step = !step;
 				}
 			break;
 		}

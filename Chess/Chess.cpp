@@ -14,11 +14,13 @@ HBITMAP hBoard;
 HBITMAP hwChess;
 HBITMAP hbChess;
 bool flag = false;
+bool multiplayer = false;
 bool white;
 bool typeMove = false;
 bool findMouse = false;
 double sizeCellx = 57.5;
 double sizeCelly = 57.5;
+char ip[] = "255.255.255.255";
 ofstream fout;
 ifstream fin;
 
@@ -27,6 +29,8 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    CreateSession(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    ConnectionSession(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    Failed(HWND, UINT, WPARAM, LPARAM);
 
 
@@ -118,6 +122,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case IDM_NEWGAME:
             cb = temp;
             InvalidateRect(hWnd, NULL, true);
+            break;
+        case IDM_CREATE_SESSION:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_CREATE_SESSION), hWnd, CreateSession);
+            break;
+        case IDM_CONNECTION_SESSION:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_CONNECTION_SESSION), hWnd, ConnectionSession);
             break;
         case IDM_SAVE1:
             fout.open("save_1.txt");
@@ -489,6 +499,64 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             return (INT_PTR)TRUE;
         }
         break;
+    }
+    return (INT_PTR)FALSE;
+}
+
+INT_PTR CALLBACK CreateSession(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+        return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        switch (wParam)
+        {
+        case IDOK:
+        {
+            multiplayer = true;
+            GetDlgItemText(hDlg, IDC_EDIT1, ip, 16);
+            static Server server(ip);
+            EndDialog(hDlg, LOWORD(wParam));
+            return (INT_PTR)TRUE;
+            break;
+        }
+        case IDCANCEL:
+            EndDialog(hDlg, LOWORD(wParam));
+            return (INT_PTR)TRUE;
+            break;
+        }
+    }
+    return (INT_PTR)FALSE;
+}
+
+INT_PTR CALLBACK ConnectionSession(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+        return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        switch (wParam)
+        {
+        case IDOK:
+        {
+            GetDlgItemText(hDlg, IDC_EDIT1, ip, 16);
+            static Client client(ip);
+            multiplayer = true;
+            EndDialog(hDlg, LOWORD(wParam));
+            return (INT_PTR)TRUE;
+            break;
+        }
+        case IDCANCEL:
+            EndDialog(hDlg, LOWORD(wParam));
+            return (INT_PTR)TRUE;
+            break;
+        }
     }
     return (INT_PTR)FALSE;
 }
